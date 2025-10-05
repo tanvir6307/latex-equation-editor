@@ -111,7 +111,7 @@
     <div class="container mx-auto px-4 max-w-5xl">
         <div class="bg-white rounded-xl shadow-lg overflow-hidden">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-primary to-secondary text-white p-6">
+            <div class="bg-gradient-to-r from-primary to-secondary text-white p-6 ">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div>
                         <h1 class="text-2xl md:text-3xl font-bold mb-2">Professional Equation Editor</h1>
@@ -722,51 +722,52 @@
             }
 
             // Load history from localStorage
-            function loadHistory() {
-                historyList.innerHTML = '';
-                
-                if (equationHistory.length === 0) {
-                    historyList.innerHTML = '<p class="text-gray-500 text-center py-4">No equations saved yet</p>';
-                    return;
-                }
-                
-                equationHistory.forEach((equation, index) => {
-                    const historyItem = document.createElement('div');
-                    historyItem.className = 'history-item p-3 border-b border-gray-200 last:border-b-0 cursor-pointer flex justify-between items-center';
-                    
-                    const equationPreview = document.createElement('div');
-                    equationPreview.className = 'text-sm overflow-hidden whitespace-nowrap overflow-ellipsis flex-1';
-                    // Fixed: Use data-math attribute instead of wrapping in $$
-                    const span = document.createElement('span');
-                    span.textContent = equation;
-                    span.setAttribute('data-math', equation);
-                    equationPreview.appendChild(span);
-                    
-                    const deleteButton = document.createElement('button');
-                    deleteButton.className = 'text-gray-400 hover:text-red-500 ml-2';
-                    deleteButton.innerHTML = '<i class="fas fa-times"></i>';
-                    deleteButton.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        deleteEquation(index);
-                    });
-                    
-                    historyItem.appendChild(equationPreview);
-                    historyItem.appendChild(deleteButton);
-                    
-                    historyItem.addEventListener('click', () => {
-                        latexInput.value = equation;
-                        updatePreview();
-                        showFeedback('Equation loaded');
-                    });
-                    
-                    historyList.appendChild(historyItem);
-                });
-                
-                // Render the LaTeX in history items
-                if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
-                    MathJax.typesetPromise([historyList]).catch((err) => console.log(err.message));
-                }
-            }
+			function loadHistory() {
+				historyList.innerHTML = '';
+				
+				if (equationHistory.length === 0) {
+					historyList.innerHTML = '<p class="text-gray-500 text-center py-4">No equations saved yet</p>';
+					return;
+				}
+				
+				equationHistory.forEach((equation, index) => {
+					const historyItem = document.createElement('div');
+					historyItem.className = 'history-item p-3 border-b border-gray-200 last:border-b-0 cursor-pointer flex justify-between items-center';
+					
+					const equationPreview = document.createElement('div');
+					equationPreview.className = 'text-sm overflow-hidden whitespace-nowrap overflow-ellipsis flex-1';
+					
+					
+					const span = document.createElement('span');
+					span.innerHTML = `\\[${equation}\\]`;   
+					equationPreview.appendChild(span);
+					
+					const deleteButton = document.createElement('button');
+					deleteButton.className = 'text-gray-400 hover:text-red-500 ml-2';
+					deleteButton.innerHTML = '<i class="fas fa-times"></i>';
+					deleteButton.addEventListener('click', (e) => {
+						e.stopPropagation();
+						deleteEquation(index);
+					});
+					
+					historyItem.appendChild(equationPreview);
+					historyItem.appendChild(deleteButton);
+					
+					historyItem.addEventListener('click', () => {
+						latexInput.value = equation;
+						updatePreview();
+						showFeedback('Equation loaded');
+					});
+					
+					historyList.appendChild(historyItem);
+				});
+				
+				
+				if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+					MathJax.typesetPromise([historyList]).catch((err) => console.log(err.message));
+				}
+			}
+
 
             // Delete equation from history
             function deleteEquation(index) {
