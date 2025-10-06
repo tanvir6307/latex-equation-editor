@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Equation Editor</title>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MathJax for rendering LaTeX -->
     <script>
         tailwind.config = {
             theme: {
@@ -23,55 +20,49 @@
         }
     </script>
     <style>
-        /* Custom styles */
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
         body {
             font-family: 'Inter', sans-serif;
         }
-        
         .symbol-tab.active {
             background-color: #3b82f6;
             color: white;
         }
-        
         .symbol-tab:hover:not(.active) {
             background-color: #dbeafe;
         }
-        
         .history-item:hover {
             background-color: #f3f4f6;
         }
-        
         .equation-preview {
             min-height: 80px;
             overflow-x: auto;
         }
-        
         .latex-input {
             min-height: 60px;
             resize: vertical;
         }
-        
-        /* Custom scrollbar */
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
-        
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f1f1;
             border-radius: 10px;
         }
-        
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #c1c1c1;
             border-radius: 10px;
         }
-        
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
         }
-        
-        /* Loading animation */
         .loader {
             border: 3px solid #f3f3f3;
             border-top: 3px solid #3b82f6;
@@ -81,23 +72,17 @@
             animation: spin 1s linear infinite;
             display: inline-block;
         }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        /* Fade in animation */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
         .fade-in {
             animation: fadeIn 0.3s ease-in-out;
         }
-        
-        /* Toggle switch */
         .toggle-checkbox:checked {
             right: 0;
             border-color: #3b82f6;
@@ -107,39 +92,23 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen py-8">
-    <div class="container mx-auto px-4 max-w-5xl">
-        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-primary to-secondary text-white p-6 ">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div>
-                        <h1 class="text-2xl md:text-3xl font-bold mb-2">Professional Equation Editor</h1>
-                        <p class="text-blue-100">Create and edit mathematical equations with LaTeX</p>
-                    </div>
-                    <div class="mt-4 md:mt-0 flex items-center space-x-2">
-                        <span id="render-status" class="text-sm bg-blue-800 px-3 py-1 rounded-full flex items-center">
+<body class="bg-gray-50">
+    <div class="w-screen h-screen p-0 sm:p-4">
+        <div class="bg-white sm:rounded-xl shadow-lg overflow-hidden w-full h-full flex flex-col">
+            <div class="p-6 md:p-8 flex-1 overflow-y-auto">
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="block text-sm font-medium text-gray-700">Equation Preview</label>
+                        <span id="render-status" class="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center">
                             <span class="loader mr-2"></span>
                             <span>Rendering...</span>
                         </span>
                     </div>
-                </div>
-            </div>
-            
-            <div class="p-6 md:p-8">
-                <!-- Equation Preview -->
-                <div class="mb-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="block text-sm font-medium text-gray-700">Equation Preview</label>
-                        <span class="text-xs text-gray-500">Rendered with MathJax</span>
-                    </div>
                     <div id="equation-preview" class="equation-preview w-full border-2 border-gray-300 rounded-lg p-4 text-2xl text-gray-800 flex items-center justify-center bg-gray-50 custom-scrollbar">
-                        <!-- Rendered equation will appear here -->
                         <span class="text-gray-400">Your equation will appear here</span>
                     </div>
                 </div>
                 
-                <!-- LaTeX Input -->
                 <div class="mb-6">
                     <div class="flex justify-between items-center mb-2">
                         <label for="latex-input" class="block text-sm font-medium text-gray-700">LaTeX Code</label>
@@ -155,7 +124,6 @@
                     <textarea id="latex-input" class="latex-input w-full bg-gray-50 border border-gray-300 rounded-lg p-3 text-gray-700 font-mono text-sm focus:ring-2 focus:ring-primary focus:border-primary custom-scrollbar" placeholder="Enter LaTeX code here, e.g. \frac{a}{b} = c" spellcheck="false"></textarea>
                 </div>
                 
-                <!-- Symbol Tabs -->
                 <div class="mb-4">
                     <div class="flex flex-wrap border-b border-gray-200">
                         <button class="symbol-tab px-4 py-2 text-sm font-medium rounded-t-lg active" data-category="common">Common</button>
@@ -165,7 +133,6 @@
                     </div>
                 </div>
                 
-                <!-- Greek Toggle -->
                 <div id="greek-toggle-container" class="mb-4 hidden">
                     <div class="flex items-center justify-center">
                         <span class="mr-2 text-sm text-gray-700">Lowercase</span>
@@ -177,12 +144,9 @@
                     </div>
                 </div>
                 
-                <!-- Symbol Grid -->
-                <div id="symbol-grid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 mb-6">
-                    <!-- Buttons will be dynamically inserted here -->
+                <div id="symbol-grid" class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-12 gap-2 mb-6">
                 </div>
                 
-                <!-- Action Buttons -->
                 <div class="flex flex-wrap gap-3 mb-6">
                     <button id="clear-button" class="flex-1 min-w-[120px] py-3 px-4 bg-gray-200 text-gray-700 font-semibold rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors flex items-center justify-center">
                         <i class="fas fa-eraser mr-2"></i> Clear
@@ -198,10 +162,8 @@
                     </button>
                 </div>
                 
-                <!-- Feedback Message -->
                 <div id="feedback-message" class="text-center font-medium mb-6 h-6"></div>
                 
-                <!-- History Section -->
                 <div class="border-t border-gray-200 pt-6">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-lg font-semibold text-gray-800">Equation History</h2>
@@ -210,14 +172,12 @@
                         </button>
                     </div>
                     <div id="history-list" class="bg-gray-50 rounded-lg p-4 max-h-60 overflow-y-auto custom-scrollbar">
-                        <!-- History items will appear here -->
                         <p class="text-gray-500 text-center py-4">No equations saved yet</p>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Help Modal -->
         <div id="help-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
             <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
                 <div class="p-6 border-b border-gray-200">
@@ -251,96 +211,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\frac{a}{b}</td>
-                                        <td class="py-2">\(\frac{a}{b}\)</td>
-                                        <td class="py-2">Fraction</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\sqrt{x}</td>
-                                        <td class="py-2">\(\sqrt{x}\)</td>
-                                        <td class="py-2">Square root</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\sqrt[n]{x}</td>
-                                        <td class="py-2">\(\sqrt[n]{x}\)</td>
-                                        <td class="py-2">n-th root</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">x^{2}</td>
-                                        <td class="py-2">\(x^{2}\)</td>
-                                        <td class="py-2">Superscript</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">x_{1}</td>
-                                        <td class="py-2">\(x_{1}\)</td>
-                                        <td class="py-2">Subscript</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\sum_{i=1}^{n}</td>
-                                        <td class="py-2">\(\sum_{i=1}^{n}\)</td>
-                                        <td class="py-2">Summation</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\prod_{i=1}^{n}</td>
-                                        <td class="py-2">\(\prod_{i=1}^{n}\)</td>
-                                        <td class="py-2">Product</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\int_{a}^{b}</td>
-                                        <td class="py-2">\(\int_{a}^{b}\)</td>
-                                        <td class="py-2">Integral</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\lim_{x \to \infty}</td>
-                                        <td class="py-2">\(\lim_{x \to \infty}\)</td>
-                                        <td class="py-2">Limit</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\binom{n}{k}</td>
-                                        <td class="py-2">\(\binom{n}{k}\)</td>
-                                        <td class="py-2">Binomial coefficient</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\vec{v}</td>
-                                        <td class="py-2">\(\vec{v}\)</td>
-                                        <td class="py-2">Vector</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\overline{AB}</td>
-                                        <td class="py-2">\(\overline{AB}\)</td>
-                                        <td class="py-2">Line segment</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\angle ABC</td>
-                                        <td class="py-2">\(\angle ABC\)</td>
-                                        <td class="py-2">Angle</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\triangle ABC</td>
-                                        <td class="py-2">\(\triangle ABC\)</td>
-                                        <td class="py-2">Triangle</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\sin(x)</td>
-                                        <td class="py-2">\(\sin(x)\)</td>
-                                        <td class="py-2">Sine function</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\log(x)</td>
-                                        <td class="py-2">\(\log(x)\)</td>
-                                        <td class="py-2">Logarithm</td>
-                                    </tr>
-                                    <tr class="border-b border-gray-200">
-                                        <td class="py-2 font-mono">\ln(x)</td>
-                                        <td class="py-2">\(\ln(x)\)</td>
-                                        <td class="py-2">Natural logarithm</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 font-mono">\exp(x)</td>
-                                        <td class="py-2">\(\exp(x)\)</td>
-                                        <td class="py-2">Exponential function</td>
-                                    </tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\frac{a}{b}</td><td class="py-2">\(\frac{a}{b}\)</td><td class="py-2">Fraction</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\sqrt{x}</td><td class="py-2">\(\sqrt{x}\)</td><td class="py-2">Square root</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\sqrt[n]{x}</td><td class="py-2">\(\sqrt[n]{x}\)</td><td class="py-2">n-th root</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">x^{2}</td><td class="py-2">\(x^{2}\)</td><td class="py-2">Superscript</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">x_{1}</td><td class="py-2">\(x_{1}\)</td><td class="py-2">Subscript</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\sum_{i=1}^{n}</td><td class="py-2">\(\sum_{i=1}^{n}\)</td><td class="py-2">Summation</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\prod_{i=1}^{n}</td><td class="py-2">\(\prod_{i=1}^{n}\)</td><td class="py-2">Product</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\int_{a}^{b}</td><td class="py-2">\(\int_{a}^{b}\)</td><td class="py-2">Integral</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\lim_{x \to \infty}</td><td class="py-2">\(\lim_{x \to \infty}\)</td><td class="py-2">Limit</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\binom{n}{k}</td><td class="py-2">\(\binom{n}{k}\)</td><td class="py-2">Binomial coefficient</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\vec{v}</td><td class="py-2">\(\vec{v}\)</td><td class="py-2">Vector</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\overline{AB}</td><td class="py-2">\(\overline{AB}\)</td><td class="py-2">Line segment</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\angle ABC</td><td class="py-2">\(\angle ABC\)</td><td class="py-2">Angle</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\triangle ABC</td><td class="py-2">\(\triangle ABC\)</td><td class="py-2">Triangle</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\sin(x)</td><td class="py-2">\(\sin(x)\)</td><td class="py-2">Sine function</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\log(x)</td><td class="py-2">\(\log(x)\)</td><td class="py-2">Logarithm</td></tr>
+                                    <tr class="border-b border-gray-200"><td class="py-2 font-mono">\ln(x)</td><td class="py-2">\(\ln(x)\)</td><td class="py-2">Natural logarithm</td></tr>
+                                    <tr><td class="py-2 font-mono">\exp(x)</td><td class="py-2">\(\exp(x)\)</td><td class="py-2">Exponential function</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -366,22 +254,15 @@
         </div>
     </div>
 
-    <!-- MathJax for rendering LaTeX -->
     <script>
-        // Define all symbols categorized
         const symbolCategories = {
             common: [
-                
                 { display: '\\frac{⬚}{⬚}', latex: '\\frac{}{}', description: 'Fraction' },
                 { display: '\\sqrt{⬚}', latex: '\\sqrt{}', description: 'Square Root' },
                 { display: '\\sqrt[⬚]{⬚}', latex: '\\sqrt[]{}', description: 'n-th Root' },
-                
-                
                 { display: 'x^{⬚}', latex: '^{}', description: 'Superscript' },
                 { display: 'x_{⬚}', latex: '_{}', description: 'Subscript' },
-                { display: 'x_{⬚}^{⬚}', latex: '_{}^{}', description: 'Subscript and Superscript' },
-                
-                
+                { display: 'x_{⬚}^{⬚}', latex: '_{}^{}', description: 'Subscript & Superscript' },
                 { display: '+', latex: '+', description: 'Plus' },
                 { display: '-', latex: '-', description: 'Minus' },
                 { display: '\\times', latex: '\\times', description: 'Times' },
@@ -389,48 +270,39 @@
                 { display: '\\cdot', latex: '\\cdot', description: 'Dot' },
                 { display: '\\pm', latex: '\\pm', description: 'Plus/Minus' },
                 { display: '\\mp', latex: '\\mp', description: 'Minus/Plus' },
-				{ display: '\\vec{⬚}', latex: '\\vec{}', description: 'Vector' },
-				{ display: '\\bar{⬚}', latex: '\\bar{}', description: 'Bar' },
-				{ display: '\\hat{⬚}', latex: '\\hat{}', description: 'Hat' },
-				{ display: '\\overline{⬚⬚}', latex: '\\overline{}', description: 'Line segment' },
-				{ display: '⬚°', latex: '\\text{°}', description: 'Degree' },
-                { display: '\\sum', latex: '\\sum', description: 'Sum' },
-                { display: '\\prod', latex: '\\prod', description: 'Product' },
-                
-                
+                { display: '\\sum', latex: '\\sum ', description: 'Sum' },
+                { display: '\\prod', latex: '\\prod ', description: 'Product' },
                 { display: '=', latex: '=', description: 'Equals' },
                 { display: '\\neq', latex: '\\neq', description: 'Not Equal' },
                 { display: '\\approx', latex: '\\approx', description: 'Approximately' },
                 { display: '\\equiv', latex: '\\equiv', description: 'Equivalent' },
                 { display: '\\propto', latex: '\\propto', description: 'Proportional' },
-				{ display: '>', latex: '>', description: 'Greater than' },
-				{ display: '<', latex: '<', description: 'Less than' },
+                { display: '>', latex: '>', description: 'Greater than' },
+                { display: '<', latex: '<', description: 'Less than' },
                 { display: '\\leq', latex: '\\leq', description: 'Less than or equal' },
                 { display: '\\geq', latex: '\\geq', description: 'Greater than or equal' },
-                { display: '\\subset', latex: '\\subset', description: 'Subset' },
-                { display: '\\supset', latex: '\\supset', description: 'Superset' },
-                { display: '\\in', latex: '\\in', description: 'Element of' },
-                { display: '\\notin', latex: '\\notin', description: 'Not element of' },
-                { display: '\\forall', latex: '\\forall', description: 'For all' },
-                { display: '\\exists', latex: '\\exists', description: 'There exists' },
-                
-                
-				{ display: '\\left|⬚\\right|', latex: '\\left|⬚\\right|', description: 'Modulus' },
+                { display: '\\subset', latex: '\\subset ', description: 'Subset' },
+                { display: '\\supset', latex: '\\supset ', description: 'Superset' },
+                { display: '\\in', latex: '\\in ', description: 'Element of' },
+                { display: '\\notin', latex: '\\notin ', description: 'Not element of' },
+                { display: '\\forall', latex: '\\forall ', description: 'For all' },
+                { display: '\\exists', latex: '\\exists ', description: 'There exists' },
                 { display: '\\left(⬚\\right)', latex: '\\left(⬚\\right)', description: 'Parentheses' },
                 { display: '\\left[⬚\\right]', latex: '\\left[⬚\\right]', description: 'Brackets' },
                 { display: '\\left\\{⬚\\right\\}', latex: '\\left\\{⬚\\right\\}', description: 'Braces' },
+                { display: '\\left|⬚\\right|', latex: '\\left|⬚\\right|', description: 'Absolute Value' },
                 { display: '\\binom{⬚}{⬚}', latex: '\\binom{}{}', description: 'Binomial' },
-                
-                
+                { display: '\\mathbf{A}', latex: '\\mathbf{}', description: 'Bold' },
+                { display: '\\vec{⬚}', latex: '\\vec{}', description: 'Vector' },
+                { display: '\\bar{⬚}', latex: '\\bar{}', description: 'Bar' },
+                { display: '\\hat{⬚}', latex: '\\hat{}', description: 'Hat' },
+                { display: '\\overline{⬚⬚}', latex: '\\overline{}', description: 'Overline' },
+                { display: '⬚°', latex: '^{\\circ}', description: 'Degree' },
+                { display: '\\triangle', latex: '\\triangle ', description: 'Triangle' },
+                { display: '\\angle', latex: '\\angle ', description: 'Angle' },
                 { display: '\\infty', latex: '\\infty', description: 'Infinity' },
                 { display: '\\partial', latex: '\\partial', description: 'Partial derivative' },
                 { display: '\\nabla', latex: '\\nabla', description: 'Nabla' },
-				{ display: '\\triangle', latex: '\\triangle ', description: 'Triangle' },
-				{ display: '\\angle', latex: '\\angle ', description: 'Angle' },
-                { display: '\\ldots', latex: '\\ldots', description: 'Horizontal ellipsis' },
-                { display: '\\vdots', latex: '\\vdots', description: 'Vertical ellipsis' },
-                { display: '\\ddots', latex: '\\ddots', description: 'Diagonal ellipsis' }
-			
             ],
             greek: {
                 lowercase: [
@@ -463,8 +335,7 @@
                     { display: '\\chi', latex: '\\chi ', description: 'Chi' },
                     { display: '\\psi', latex: '\\psi ', description: 'Psi' },
                     { display: '\\omega', latex: '\\omega ', description: 'Omega' },
-					{ display: '\\hbar', latex: '\\hbar ', description: 'H cut' },
-					
+                    { display: '\\hbar', latex: '\\hbar ', description: 'H cut' },
                 ],
                 uppercase: [
                     { display: 'A', latex: 'A', description: 'Capital Alpha' },
@@ -495,6 +366,7 @@
             arrows: [
                 { display: '\\leftarrow', latex: '\\leftarrow ', description: 'Left arrow' },
                 { display: '\\rightarrow', latex: '\\rightarrow ', description: 'Right arrow' },
+                { display: '\\rightleftharpoons', latex: '\\rightleftharpoons ', description: 'Reversible' },
                 { display: '\\leftrightarrow', latex: '\\leftrightarrow ', description: 'Left-right arrow' },
                 { display: '\\Leftarrow', latex: '\\Leftarrow ', description: 'Double left arrow' },
                 { display: '\\Rightarrow', latex: '\\Rightarrow ', description: 'Double right arrow' },
@@ -526,13 +398,13 @@
                 { display: '\\log', latex: '\\log ', description: 'Logarithm' },
                 { display: '\\ln', latex: '\\ln ', description: 'Natural log' },
                 { display: '\\exp', latex: '\\exp ', description: 'Exponential' },
-				{ display: '\\sum', latex: '\\sum', description: 'Sum' },
-				{ display: '\\sum_{i=0}^{n}', latex: '\\sum_{i=0}^{n}', description: 'Sum' },
+                { display: '\\sum', latex: '\\sum', description: 'Sum' },
+                { display: '\\sum_{i=0}^{n}', latex: '\\sum_{i=0}^{n}', description: 'Sum' },
                 { display: '\\prod', latex: '\\prod', description: 'Product' },
-				{ display: '\\prod_{i=0}^{n}', latex: '\\prod_{i=0}^{n}', description: 'Product' },
+                { display: '\\prod_{i=0}^{n}', latex: '\\prod_{i=0}^{n}', description: 'Product' },
                 { display: '\\lim_{x \\to a}', latex: '\\lim_{x \\to a}', description: 'Limit' },
                 { display: '\\frac{d}{dx}', latex: '\\frac{d}{dx}', description: 'Derivative' },
-				{ display: '\\int', latex: '\\int ', description: 'Indefinite Integral' },
+                { display: '\\int', latex: '\\int ', description: 'Indefinite Integral' },
                 { display: '\\int_{⬚}^{⬚}', latex: '\\int_{}^{}', description: 'Definite Integral' },
                 { display: '\\iint', latex: '\\iint ', description: 'Double integral' },
                 { display: '\\iiint', latex: '\\iiint ', description: 'Triple integral' },
@@ -541,22 +413,23 @@
                 { display: '\\partial', latex: '\\partial ', description: 'Partial derivative' },
                 { display: '\\operatorname{det}', latex: '\\operatorname{det}', description: 'Determinant' },
                 { display: '\\operatorname{tr}', latex: '\\operatorname{tr}', description: 'Trace' },
-				{ display: '[2\\times 2]', latex: '\\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}', description: 'Matrix' },
-				{ display: '[3\\times 3]', latex: '\\begin{bmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{bmatrix}', description: 'Matrix' },
-				{ display: '|2\\times 2|', latex: '\\begin{vmatrix} 1 & 2 \\\\ 3 & 4 \\end{vmatrix}', description: 'Determinant' },
-				{ display: '|3\\times 3|', latex: '\\begin{vmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{vmatrix}', description: 'Determinant' },
-				{ display: '\\mathbb{R}', latex: '\\mathbb{R}', description: 'Real numbers' },
-				{ display: '\\mathbb{N}', latex: '\\mathbb{N}', description: 'Natural numbers' },
-				{ display: '\\mathbb{Z}', latex: '\\mathbb{Z}', description: 'Integers' },
-				{ display: '\\mathbb{Q}', latex: '\\mathbb{Q}', description: 'Rational numbers' },
-				{ display: '\\mathbb{C}', latex: '\\mathbb{C}', description: 'Complex numbers' },
-				{ display: '\\emptyset', latex: '\\emptyset ', description: 'Empty set' },
+                { display: '[2\\times 2]', latex: '\\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}', description: 'Matrix' },
+                { display: '[3\\times 3]', latex: '\\begin{bmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{bmatrix}', description: 'Matrix' },
+                { display: '|2\\times 2|', latex: '\\begin{vmatrix} 1 & 2 \\\\ 3 & 4 \\end{vmatrix}', description: 'Determinant' },
+                { display: '|3\\times 3|', latex: '\\begin{vmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\\\ 7 & 8 & 9 \\end{vmatrix}', description: 'Determinant' },
+                { display: '\\mathbb{R}', latex: '\\mathbb{R}', description: 'Real numbers' },
+                { display: '\\mathbb{N}', latex: '\\mathbb{N}', description: 'Natural numbers' },
+                { display: '\\mathbb{Z}', latex: '\\mathbb{Z}', description: 'Integers' },
+                { display: '\\mathbb{Q}', latex: '\\mathbb{Q}', description: 'Rational numbers' },
+                { display: '\\mathbb{C}', latex: '\\mathbb{C}', description: 'Complex numbers' },
+                { display: '\\emptyset', latex: '\\emptyset ', description: 'Empty set' },
+                { display: '\\ldots', latex: '\\ldots', description: 'Horizontal ellipsis' },
+                { display: '\\vdots', latex: '\\vdots', description: 'Vertical ellipsis' },
+                { display: '\\ddots', latex: '\\ddots', description: 'Diagonal ellipsis' },
             ]
         };
 
-        // Main application logic
         function runEditor() {
-            // DOM elements
             const equationPreview = document.getElementById('equation-preview');
             const latexInput = document.getElementById('latex-input');
             const symbolGrid = document.getElementById('symbol-grid');
@@ -576,69 +449,51 @@
             const closeHelpButtons = document.querySelectorAll('#close-help, #close-help-bottom');
             const renderStatus = document.getElementById('render-status');
 
-            // State variables
             let currentCategory = 'common';
             let isGreekUppercase = false;
             let equationHistory = JSON.parse(localStorage.getItem('equationHistory')) || [];
             let isRendering = false;
 
-            // Initialize the editor
             function init() {
                 loadSymbols(currentCategory);
                 loadHistory();
                 updatePreview();
-                
-                // Hide render status after initial load
                 setTimeout(() => {
                     renderStatus.classList.add('hidden');
                 }, 1000);
             }
 
-            // Load symbols for the selected category
             function loadSymbols(category) {
                 symbolGrid.innerHTML = '';
                 let symbols = [];
-                
                 if (category === 'greek') {
                     greekToggleContainer.classList.remove('hidden');
-                    symbols = isGreekUppercase ? 
-                        symbolCategories.greek.uppercase : 
-                        symbolCategories.greek.lowercase;
+                    symbols = isGreekUppercase ? symbolCategories.greek.uppercase : symbolCategories.greek.lowercase;
                 } else {
                     greekToggleContainer.classList.add('hidden');
                     symbols = symbolCategories[category];
                 }
-                
                 symbols.forEach(symbol => {
                     const button = document.createElement('button');
                     button.innerHTML = `\\(${symbol.display}\\)`;
                     button.dataset.latex = symbol.latex;
                     button.title = symbol.description;
                     button.className = 'py-3 bg-gray-100 rounded-md hover:bg-gray-200 text-lg text-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary flex items-center justify-center fade-in';
-                    
                     button.addEventListener('click', () => {
                         insertLatex(symbol.latex);
                     });
-                    
                     symbolGrid.appendChild(button);
                 });
-                
-                // Render the LaTeX on all the buttons after they are created
                 if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
                     MathJax.typesetPromise([symbolGrid]).catch((err) => console.log(err.message));
                 }
             }
 
-            // Insert LaTeX at cursor position
             function insertLatex(latex) {
                 const start = latexInput.selectionStart;
                 const end = latexInput.selectionEnd;
                 const text = latexInput.value;
-                
-                // Insert the LaTeX at the cursor position
                 latexInput.value = text.substring(0, start) + latex + text.substring(end);
-                
-                // Move cursor to a logical position after insertion
                 let cursorPos = start + latex.length;
                 if (latex.includes("{}")) {
                     cursorPos = start + latex.indexOf("{}") + 1;
@@ -648,23 +503,18 @@
                     cursorPos = start + latex.indexOf("^{}") + 2;
                 }
                 latexInput.selectionStart = latexInput.selectionEnd = cursorPos;
-
                 latexInput.focus();
                 updatePreview();
             }
 
-            // Update the equation preview based on the textarea content
             function updatePreview() {
                 const latexString = latexInput.value.trim();
-                
                 if (latexString === '') {
                     equationPreview.innerHTML = '<span class="text-gray-400">Your equation will appear here</span>';
                     return;
                 }
-                
                 isRendering = true;
                 renderStatus.classList.remove('hidden');
-                
                 equationPreview.innerHTML = `$$${latexString}$$`;
                 if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
                     MathJax.typesetPromise([equationPreview])
@@ -680,68 +530,48 @@
                 }
             }
 
-            // Show feedback message
             function showFeedback(message, isError = false) {
                 feedbackMessage.textContent = message;
                 feedbackMessage.className = `text-center font-medium mb-6 h-6 ${isError ? 'text-red-600' : 'text-green-600'}`;
-                
                 setTimeout(() => {
                     feedbackMessage.textContent = '';
                     feedbackMessage.className = 'text-center font-medium mb-6 h-6';
                 }, 3000);
             }
 
-            // Save equation to history
             function saveEquation() {
                 const latexString = latexInput.value.trim();
-                
                 if (latexString === '') {
                     showFeedback('Cannot save empty equation', true);
                     return;
                 }
-                
-                // Check if equation already exists in history
                 if (equationHistory.includes(latexString)) {
                     showFeedback('Equation already saved', true);
                     return;
                 }
-                
-                // Add to history (limit to 10 equations)
                 equationHistory.unshift(latexString);
                 if (equationHistory.length > 10) {
                     equationHistory.pop();
                 }
-                
-                // Save to localStorage
                 localStorage.setItem('equationHistory', JSON.stringify(equationHistory));
-                
-                // Update history display
                 loadHistory();
-                
                 showFeedback('Equation saved to history');
             }
 
-            // Load history from localStorage
 			function loadHistory() {
 				historyList.innerHTML = '';
-				
 				if (equationHistory.length === 0) {
 					historyList.innerHTML = '<p class="text-gray-500 text-center py-4">No equations saved yet</p>';
 					return;
 				}
-				
 				equationHistory.forEach((equation, index) => {
 					const historyItem = document.createElement('div');
 					historyItem.className = 'history-item p-3 border-b border-gray-200 last:border-b-0 cursor-pointer flex justify-between items-center';
-					
 					const equationPreview = document.createElement('div');
 					equationPreview.className = 'text-sm overflow-hidden whitespace-nowrap overflow-ellipsis flex-1';
-					
-					
 					const span = document.createElement('span');
 					span.innerHTML = `\\[${equation}\\]`;   
 					equationPreview.appendChild(span);
-					
 					const deleteButton = document.createElement('button');
 					deleteButton.className = 'text-gray-400 hover:text-red-500 ml-2';
 					deleteButton.innerHTML = '<i class="fas fa-times"></i>';
@@ -749,27 +579,20 @@
 						e.stopPropagation();
 						deleteEquation(index);
 					});
-					
 					historyItem.appendChild(equationPreview);
 					historyItem.appendChild(deleteButton);
-					
 					historyItem.addEventListener('click', () => {
 						latexInput.value = equation;
 						updatePreview();
 						showFeedback('Equation loaded');
 					});
-					
 					historyList.appendChild(historyItem);
 				});
-				
-				
 				if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
 					MathJax.typesetPromise([historyList]).catch((err) => console.log(err.message));
 				}
 			}
 
-
-            // Delete equation from history
             function deleteEquation(index) {
                 equationHistory.splice(index, 1);
                 localStorage.setItem('equationHistory', JSON.stringify(equationHistory));
@@ -777,7 +600,6 @@
                 showFeedback('Equation deleted');
             }
 
-            // Clear history
             function clearHistory() {
                 equationHistory = [];
                 localStorage.removeItem('equationHistory');
@@ -785,40 +607,27 @@
                 showFeedback('History cleared');
             }
 
-            // Auto format LaTeX code
             function autoFormat() {
                 let latex = latexInput.value;
-                
-                // Add spaces around operators
                 latex = latex.replace(/([+\-*/=])/g, ' $1 ');
-                
-                // Remove multiple spaces
                 latex = latex.replace(/\s+/g, ' ');
-                
-                // Trim
                 latex = latex.trim();
-                
                 latexInput.value = latex;
                 updatePreview();
                 showFeedback('LaTeX code formatted');
             }
 
-            // Event listeners
             latexInput.addEventListener('input', updatePreview);
             
             symbolTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    // Update active tab
                     symbolTabs.forEach(t => t.classList.remove('active'));
                     tab.classList.add('active');
-                    
-                    // Load symbols for selected category
                     currentCategory = tab.dataset.category;
                     loadSymbols(currentCategory);
                 });
             });
             
-            // Greek case toggle
             greekCaseToggle.addEventListener('change', () => {
                 isGreekUppercase = greekCaseToggle.checked;
                 if (currentCategory === 'greek') {
@@ -827,20 +636,18 @@
             });
             
             copyButton.addEventListener('click', () => {
-                const textToCopy = latexInput.value.trim();
-                
-                if (textToCopy === '') {
+                const latexCode = latexInput.value.trim();
+                if (latexCode === '') {
                     showFeedback('Nothing to copy', true);
                     return;
                 }
-                
+                const textToCopy = `$$${latexCode}$$`;
                 navigator.clipboard.writeText(textToCopy)
                     .then(() => {
                         showFeedback('LaTeX copied to clipboard');
                     })
                     .catch(err => {
                         console.error('Failed to copy: ', err);
-                        // Fallback for older browsers
                         const textArea = document.createElement('textarea');
                         textArea.value = textToCopy;
                         document.body.appendChild(textArea);
@@ -864,17 +671,12 @@
             
             backspaceButton.addEventListener('click', () => {
                 const currentLatex = latexInput.value;
-                // Remove the last LaTeX command (everything after the last backslash) or the last character
                 const lastBackslashIndex = currentLatex.lastIndexOf('\\');
-                
                 if (lastBackslashIndex !== -1 && lastBackslashIndex > currentLatex.lastIndexOf(' ', lastBackslashIndex)) {
-                    // Remove the LaTeX command
                     latexInput.value = currentLatex.substring(0, lastBackslashIndex);
                 } else {
-                    // Remove the last character
                     latexInput.value = currentLatex.slice(0, -1);
                 }
-                
                 updatePreview();
             });
             
@@ -894,18 +696,15 @@
                 });
             });
             
-            // Close modal when clicking outside
             helpModal.addEventListener('click', (e) => {
                 if (e.target === helpModal) {
                     helpModal.classList.add('hidden');
                 }
             });
 
-            // Initialize the editor
             init();
         }
 
-        // MathJax configuration
         MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -926,3 +725,4 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
+
