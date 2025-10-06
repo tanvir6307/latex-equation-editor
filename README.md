@@ -18,7 +18,7 @@ It allows you to write, preview, and copy LaTeX mathematical equations in real-t
 ## 🖥️ Live Demo
 
 👉 [Try it Online](#)  
-*[Equation Editor](https://tanvir6307.github.io/latex-equation-editor/)*
+*(https://tanvir6307.github.io/latex-equation-editor/)*
 
 ---
 
