@@ -270,8 +270,6 @@
                 { display: '\\cdot', latex: '\\cdot', description: 'Dot' },
                 { display: '\\pm', latex: '\\pm', description: 'Plus/Minus' },
                 { display: '\\mp', latex: '\\mp', description: 'Minus/Plus' },
-                { display: '\\sum', latex: '\\sum ', description: 'Sum' },
-                { display: '\\prod', latex: '\\prod ', description: 'Product' },
                 { display: '=', latex: '=', description: 'Equals' },
                 { display: '\\neq', latex: '\\neq', description: 'Not Equal' },
                 { display: '\\approx', latex: '\\approx', description: 'Approximately' },
@@ -287,10 +285,10 @@
                 { display: '\\notin', latex: '\\notin ', description: 'Not element of' },
                 { display: '\\forall', latex: '\\forall ', description: 'For all' },
                 { display: '\\exists', latex: '\\exists ', description: 'There exists' },
-                { display: '\\left(⬚\\right)', latex: '\\left(⬚\\right)', description: 'Parentheses' },
-                { display: '\\left[⬚\\right]', latex: '\\left[⬚\\right]', description: 'Brackets' },
-                { display: '\\left\\{⬚\\right\\}', latex: '\\left\\{⬚\\right\\}', description: 'Braces' },
-                { display: '\\left|⬚\\right|', latex: '\\left|⬚\\right|', description: 'Absolute Value' },
+                { display: '\\left(⬚\\right)', latex: '\\left({}\\right)', description: 'Parentheses' },
+                { display: '\\left[⬚\\right]', latex: '\\left[{}\\right]', description: 'Brackets' },
+                { display: '\\left\\{⬚\\right\\}', latex: '\\left\\{{}\\right\\}', description: 'Braces' },
+                { display: '\\left|⬚\\right|', latex: '\\left|{}\\right|', description: 'Absolute Value' },
                 { display: '\\binom{⬚}{⬚}', latex: '\\binom{}{}', description: 'Binomial' },
                 { display: '\\mathbf{A}', latex: '\\mathbf{}', description: 'Bold' },
                 { display: '\\vec{⬚}', latex: '\\vec{}', description: 'Vector' },
@@ -303,7 +301,10 @@
                 { display: '\\infty', latex: '\\infty', description: 'Infinity' },
                 { display: '\\partial', latex: '\\partial', description: 'Partial derivative' },
                 { display: '\\nabla', latex: '\\nabla', description: 'Nabla' },
+				{ display: '\\text{Å}', latex: '\\text{Å}', description: 'Angstrom' },
+				{ display: '\\text{Space}', latex: '~', description: 'Space' },
 				{ display: '\\text{Non-Italic}', latex: '\\mathrm{}', description: 'Non-Italic Serif Font' },
+				{ display: '\\text{Text}', latex: '\\text{}', description: 'Write text' },
             ],
             greek: {
                 lowercase: [
@@ -726,6 +727,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
+
 
 
 
